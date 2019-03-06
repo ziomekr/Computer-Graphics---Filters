@@ -1,0 +1,121 @@
+﻿<Window x:Class="Computer_Graphics___Filters.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Computer_Graphics___Filters"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="250"/>            
+        </Grid.ColumnDefinitions>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="0">
+            <Canvas Width="{Binding ActualWidth, ElementName=image}" Height="{Binding ActualHeight, ElementName=image}" >
+                <Canvas.Background>
+                    <VisualBrush  >
+                        <VisualBrush.Visual>
+                            <Image x:Name="image"/>
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </Canvas.Background>
+            </Canvas>
+        </ScrollViewer>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="1" Margin="0,3,0,3" Content="Load image" Name="LoadButton" Click="LoadImageClick"/>
+            <TabControl Grid.Row="0">
+                <TabItem Header="Functional Filters">
+                    <StackPanel>
+                        <Label FontSize="12" FontWeight="Bold">Inversion filter</Label>
+                        <Button Margin="5" Width ="120" Content="Apply" Name="InversionFilterButton" Click="InvertionClick"/>
+                        <Label FontSize="12" FontWeight="Bold">Brightness correction</Label>
+                        <DockPanel VerticalAlignment="Center" Margin="5">
+                            <TextBox Text="{Binding ElementName=BrightnessSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Right" Width="30" />
+                            <Slider Minimum ="-255" Maximum="255" IsSnapToTickEnabled="True" Name="BrightnessSlider" />
+                        </DockPanel>
+                        <Button Margin="5" Width ="120" Content="Apply" Name="BrightnessFilterButton" Click="BrightnessClick"/>
+                        <Label FontSize="12" FontWeight="Bold">Contrast enhancement</Label>
+                        <DockPanel VerticalAlignment="Center" Margin="5">
+                            <TextBox Text="{Binding ElementName=ContrastSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Right" Width="30" />
+                            <Slider Minimum="-1" Maximum="1" IsSnapToTickEnabled="True" TickFrequency="0.10" Name="ContrastSlider" />
+                        </DockPanel>
+                        <Button Margin="5" Width ="120" Content="Apply" Name="ContrastFilterButton" Click="ContrastClick"/>
+                        <Label FontSize="12" FontWeight="Bold">Gamma correction</Label>
+                        <DockPanel VerticalAlignment="Center" Margin="5">
+                            <TextBox Text="{Binding ElementName=GammaSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Right" Width="30" />
+                            <Slider Maximum="3" Value="1.5" IsSnapToTickEnabled="True" TickFrequency="0.10" Name="GammaSlider" />
+                        </DockPanel>
+                        <Button Margin="5" Width ="120" Content="Apply" Name="GammaFilterButton" Click="GammaClick"/>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Convolution Filters">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="300"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+                            <CheckBox Name="ModifyFilter" Grid.Row="0" Margin="5" Checked="ModifyFilterCheckedChanged" Unchecked="ModifyFilterCheckedChanged">Modify filter</CheckBox>
+                            <ScrollViewer  Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                <UniformGrid Name="KernelGrid"/>
+                            </ScrollViewer>
+                            <Button Grid.Row="2" Margin="5" Width ="120" Content="Apply" Name="ApplyButton" Click="ApplyClick"/>
+                            <Button Grid.Row="2" Margin="5" Width ="120" Content="Apply changes" Name="ApplyChangesToFilter" Click="ApplyChangesToFilterClick" Visibility="Collapsed"/>
+                            <WrapPanel  Grid.Row="3">
+                                <Label FontSize="12" FontWeight="Bold">Kernel size</Label>
+                                <Label>X:</Label>
+                                <TextBox Name="KernelX" Margin="5" TextChanged="KernelSizeTextChanged" TextAlignment="Center"  Width="30" />
+                                <Label>Y:</Label>
+                                <TextBox Name="KernelY" Margin="5" TextChanged="KernelSizeTextChanged" TextAlignment="Center"  Width="30" />
+                            </WrapPanel>
+                            <WrapPanel  Grid.Row="4">
+                                <Label FontSize="12" FontWeight="Bold">Anchor position</Label>
+                                <Label>X:</Label>
+                                <TextBox Name="AnchorX" Margin="5" TextChanged="AnchorTextChanged" TextAlignment="Center"  Width="30" />
+                                <Label>Y:</Label>
+                                <TextBox Name="AnchorY" Margin="5" TextChanged="AnchorTextChanged" TextAlignment="Center"  Width="30" />
+                            </WrapPanel>
+                            <WrapPanel  Grid.Row="5">
+                                <Label FontSize="12" FontWeight="Bold">Offset:</Label>
+                                <TextBox Name="Offset" Margin="5" TextChanged="OffsetTextChanged" TextAlignment="Center"  Width="30" />
+                                <Label FontSize="12" FontWeight="Bold">Divisor:</Label>
+                                <TextBox Name="Divisor" Margin="5" TextChanged="DivisorTextChanged" TextAlignment="Center"  Width="30" />
+                            </WrapPanel>
+                        </Grid>
+                        <ScrollViewer  Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                            <StackPanel Name="ConvolutionFiltersPanel">
+                                <Button Tag="0" Margin="5" Width ="150" Content="Blur" Name="BlurFilterButton" Click="ConvolutionFilterClick"/>
+                                <Button Tag="1" Margin="5" Width ="150" Content="Gaussian smoothening" Name="GaussianFilterButton" Click="ConvolutionFilterClick"/>
+                                <Button Tag="2" Margin="5" Width ="150" Content="Sharpen" Name="SharpenFilterButton" Click="ConvolutionFilterClick"/>
+                                <Button Tag="3" Margin="5" Width ="150" Content="Edge detection" Name="EdgeDetectionFilterButton" Click="ConvolutionFilterClick"/>
+                                <Button Tag="4" Margin="5" Width ="150" Content="Emboss" Name="EmbossButton" Click="ConvolutionFilterClick"/>
+                            </StackPanel>
+                        </ScrollViewer>
+                        <Grid Grid.Row="2">
+                            <Button Margin="5" Width ="120" Content="Add new filter" Name="NewFilterButton" Click="NewFilterClick"/>
+                            <WrapPanel Name="NewFilterWrapPanel" Visibility="Collapsed">
+                                <Label FontSize="12" FontWeight="Bold">Name:</Label>
+                                <TextBox Name="FilterName" Margin="5" TextAlignment="Center"  Width="100" />
+                                <Button Margin="5" Width ="50" Content="Add" Name="AddFilterButton" Click="AddFilterClick"/>
+                            </WrapPanel>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Grid>
+</Window>
