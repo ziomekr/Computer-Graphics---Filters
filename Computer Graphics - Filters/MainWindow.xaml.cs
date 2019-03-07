@@ -38,10 +38,31 @@ namespace Computer_Graphics___Filters
             {
                 BitmapImage toLoad = LoadImage(op.FileName);
                 image.Source = toLoad;
+                originalImage.Source = toLoad;
+                ResetShowOriginalImage.Visibility = Visibility.Visible;
             }
         }
-        //Filters initialization
-        private void InitializeFilters() {
+        //Reset image to original state
+        private void ResetImageClick(object sender, RoutedEventArgs e)
+        {
+            image.Source = originalImage.Source;
+        }
+        private void ShowOriginalCheckedChanged(object sender, RoutedEventArgs e)
+        {
+            CheckBox cb = (CheckBox)sender;
+            if (cb.IsChecked == true)
+            {
+                columnOriginal.Width = new GridLength(1, GridUnitType.Star);
+                OriginalImageView.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                columnOriginal.Width = new GridLength(0, GridUnitType.Pixel);
+                OriginalImageView.Visibility = Visibility.Collapsed;
+            }
+        }
+            //Filters initialization
+            private void InitializeFilters() {
             BitmapSource img = (BitmapSource)image.Source;
             ConvolutionFilters.Add(new BlurFilter(img));
             ConvolutionFilters.Add(new GaussianSmootheningFilter(img));

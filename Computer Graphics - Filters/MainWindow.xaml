@@ -11,7 +11,12 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="250"/>            
         </Grid.ColumnDefinitions>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="0">
+        <Grid Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Name="columnOriginal" Width="0"/>
+            </Grid.ColumnDefinitions>
+            <ScrollViewer Name="ImageView" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="0">
             <Canvas Width="{Binding ActualWidth, ElementName=image}" Height="{Binding ActualHeight, ElementName=image}" >
                 <Canvas.Background>
                     <VisualBrush  >
@@ -21,13 +26,30 @@
                     </VisualBrush>
                 </Canvas.Background>
             </Canvas>
-        </ScrollViewer>
+            </ScrollViewer>
+            <ScrollViewer Name="OriginalImageView" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" Visibility="Collapsed">
+                <Canvas Width="{Binding ActualWidth, ElementName=image}" Height="{Binding ActualHeight, ElementName=image}" >
+                    <Canvas.Background>
+                        <VisualBrush  >
+                            <VisualBrush.Visual>
+                                <Image x:Name="originalImage"/>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Canvas.Background>
+                </Canvas>
+            </ScrollViewer>
+        </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
-            <Button Grid.Row="1" Margin="0,3,0,3" Content="Load image" Name="LoadButton" Click="LoadImageClick"/>
+            <WrapPanel Grid.Row="1" Name="ResetShowOriginalImage" Visibility="Collapsed">
+                <CheckBox Margin="5" Name="ShowOriginalCheckBox" Checked="ShowOriginalCheckedChanged" Unchecked="ShowOriginalCheckedChanged">Original image</CheckBox>
+                <Button Margin="5" Width="120" Content="Reset image" Name="ReloadButton" Click="ResetImageClick"/>
+            </WrapPanel>
+            <Button Grid.Row="2" Margin="0,3,0,3" Content="Load image" Name="LoadButton" Click="LoadImageClick"/>
             <TabControl Grid.Row="0">
                 <TabItem Header="Functional Filters">
                     <StackPanel>
