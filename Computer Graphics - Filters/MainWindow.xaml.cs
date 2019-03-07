@@ -356,10 +356,14 @@ namespace Computer_Graphics___Filters
                     int x, y;
                     int.TryParse(AnchorX.Text.ToString(), out x);
                     int.TryParse(AnchorY.Text.ToString(), out y);
-                    t = KernelFields.ElementAt(anchorY * kernelX + anchorX);
-                    t.BorderBrush = System.Windows.Media.Brushes.Black;
-                    t = KernelFields.ElementAt(y * kernelX + x);
-                    t.BorderBrush = System.Windows.Media.Brushes.Red;
+                    try
+                    {
+                        t = KernelFields.ElementAt(anchorY * kernelX + anchorX);
+                        t.BorderBrush = System.Windows.Media.Brushes.Black;
+                        t = KernelFields.ElementAt(y * kernelX + x);
+                        t.BorderBrush = System.Windows.Media.Brushes.Red;
+                    }
+                    catch { }
                     anchorX = x;
                     anchorY = y;
                 }
