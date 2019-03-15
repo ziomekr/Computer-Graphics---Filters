@@ -122,7 +122,7 @@ namespace Computer_Graphics___Filters
                 t.Join();
             }
         }
-        public void ProcessPart(int startIdx, int endIdx, int stride, int valuesPerPixel, int kernelX, int kernelY, int pixelsLength)
+        public virtual void ProcessPart(int startIdx, int endIdx, int stride, int valuesPerPixel, int kernelX, int kernelY, int pixelsLength)
         {
            for (int i = startIdx; i < endIdx; i++)
            {

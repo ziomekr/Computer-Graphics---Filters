@@ -18,7 +18,7 @@ namespace Computer_Graphics___Filters
         private Button activeButton;
         private List<TextBox> KernelFields = new List<TextBox>();
         private List<ConvolutionFilter> ConvolutionFilters = new List<ConvolutionFilter>();
-        private int FiltersCount = 5;
+        private int FiltersCount = 6;
         private int anchorX, anchorY, kernelX, kernelY;
         public MainWindow()
         {
@@ -69,6 +69,7 @@ namespace Computer_Graphics___Filters
             ConvolutionFilters.Add(new SharpenFilter(img));
             ConvolutionFilters.Add(new EdgeDetectionFilter(img));
             ConvolutionFilters.Add(new EmbossFilter(img));
+            ConvolutionFilters.Add(new MedianFilter(img));
         }
 
         //Apply inversion filter
@@ -207,6 +208,13 @@ namespace Computer_Graphics___Filters
             Offset.IsEnabled = !Offset.IsEnabled;
             Divisor.IsEnabled = !Divisor.IsEnabled;
         }
+        //Thresholding filter click
+        private void ThresholdingClick(object sender, RoutedEventArgs e)
+        {
+            if (image.Source != null)
+                image.Source = new ThresholdingFilter((BitmapSource)image.Source, ThresholdSlider.Value, (int)KSlider.Value).FilterImage();
+        }
+
         //Open image as stream from file
         private BitmapImage LoadImage(string FileName) {
             MemoryStream ms = new MemoryStream();

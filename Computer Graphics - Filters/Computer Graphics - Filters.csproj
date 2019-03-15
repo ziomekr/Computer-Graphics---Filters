@@ -57,7 +57,9 @@
     </ApplicationDefinition>
     <Compile Include="EdgeDetectionFilter.cs" />
     <Compile Include="EmbossFilter.cs" />
+    <Compile Include="MedianFilter.cs" />
     <Compile Include="SharpenFilter.cs" />
+    <Compile Include="ThresholdingFilter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

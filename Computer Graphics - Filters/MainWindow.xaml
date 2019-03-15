@@ -125,6 +125,7 @@
                                 <Button Tag="2" Margin="5" Width ="150" Content="Sharpen" Name="SharpenFilterButton" Click="ConvolutionFilterClick"/>
                                 <Button Tag="3" Margin="5" Width ="150" Content="Edge detection" Name="EdgeDetectionFilterButton" Click="ConvolutionFilterClick"/>
                                 <Button Tag="4" Margin="5" Width ="150" Content="Emboss" Name="EmbossButton" Click="ConvolutionFilterClick"/>
+                                <Button Tag="5" Margin="5" Width ="150" Content="Median Filter" Name="MedianButton" Click="ConvolutionFilterClick"/>
                             </StackPanel>
                         </ScrollViewer>
                         <Grid Grid.Row="2">
@@ -136,6 +137,21 @@
                             </WrapPanel>
                         </Grid>
                     </Grid>
+                </TabItem>
+                <TabItem Header="Thresholding Filter">
+                    <StackPanel>
+                        <Label FontSize="12" FontWeight="Bold">Thresholding filter</Label>
+                        <Label FontSize="10" >K:</Label>
+                        <DockPanel VerticalAlignment="Center" Margin="5">
+                            <TextBox Text="{Binding ElementName=KSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Right" Width="30" />
+                            <Slider Minimum ="2" Maximum="16" IsSnapToTickEnabled="True" Name="KSlider" TickPlacement="BottomRight" AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2" Ticks="2, 4, 8, 16"/>
+                        </DockPanel>
+                        <DockPanel VerticalAlignment="Center" Margin="5">
+                            <TextBox Text="{Binding ElementName=ThresholdSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Right" Width="30" />
+                            <Slider Minimum ="0" Maximum="1" Name="ThresholdSlider" />
+                        </DockPanel>
+                        <Button Margin="5" Width ="120" Content="Apply" Name="ThresholdingFilterButton" Click="ThresholdingClick"/>
+                    </StackPanel>
                 </TabItem>
             </TabControl>
         </Grid>
