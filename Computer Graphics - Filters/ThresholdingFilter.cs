@@ -9,52 +9,57 @@ namespace Computer_Graphics___Filters
 {
     class ThresholdingFilter : Filter
     {
-        double Threshold { get; set; }
-        int K { get; set; }
-        byte[] KValues { get; set; }
+        protected int K { get; set; }
+        protected byte[] KValues { get; set; }
+        protected double Threshold { get; set; }
+        
         public ThresholdingFilter(BitmapSource image, double threshold, int k) : base(image){
-            Threshold = threshold;
             K = k;
+            Threshold = threshold;
             KValues = SetKValues();
         }
 
-        public BitmapSource FilterImage() {
-
+        public virtual BitmapSource FilterImage() {
+            
             for (int i = 0; i < Pixels.Length; i++)
             {
                 if (Pixels[i] != 255)
                 {
-                    int closestKIndex = GetClosestKIndex(Pixels[i]);
-                    if (Pixels[i] < KValues[closestKIndex] + (KValues[closestKIndex + 1] - KValues[closestKIndex]) * Threshold)
-                    {
-                        Pixels[i] = KValues[closestKIndex];
-                    }
-                    else
-                    {
-                        Pixels[i] = KValues[closestKIndex + 1];
-                    }
+                    ProcessPixel(i);
                 }
             }
             base.WritePixels();
             return base.ToProcess;
         }
-
-        private byte[] SetKValues() {
+        private byte[] SetKValues()
+        {
 
             byte[] KValues = new byte[K];
-            int step = 255 / (K - 1);
-            for (int i = 0; i < K; i++) {
+            double step = (double)255 / (K - 1);
+            for (int i = 0; i < K; i++)
+            {
                 KValues[i] = (byte)(step * i);
             }
             return KValues;
         }
-
         private int GetClosestKIndex(byte pixel) {
             for (int i = 0; i < K; i++) {
                 if (KValues[i] > pixel)
                     return i - 1;
             }
-            return -1;
+            return K-2;
+        }
+
+        protected void ProcessPixel(int pixel_index) {
+            int closestKIndex = GetClosestKIndex(Pixels[pixel_index]);
+            if (Pixels[pixel_index] < KValues[closestKIndex] + (KValues[closestKIndex + 1] - KValues[closestKIndex]) * Threshold)
+            {
+                base.Pixels[pixel_index] = KValues[closestKIndex];
+            }
+            else
+            {
+                base.Pixels[pixel_index] = KValues[closestKIndex + 1];
+            }
         }
     }
 }

@@ -212,7 +212,25 @@ namespace Computer_Graphics___Filters
         private void ThresholdingClick(object sender, RoutedEventArgs e)
         {
             if (image.Source != null)
+            {
                 image.Source = new ThresholdingFilter((BitmapSource)image.Source, ThresholdSlider.Value, (int)KSlider.Value).FilterImage();
+            }
+        }
+        //Random dithering filter click
+        private void RandomDitheringClick(object sender, RoutedEventArgs e)
+        {
+            if (image.Source != null)
+            {
+                image.Source = new RandomDitheringFilter((BitmapSource)image.Source, (int)KSliderRD.Value).FilterImage();
+            }
+        }
+        //Grayscale filter click
+        private void GrayscaleClick(object sender, RoutedEventArgs e)
+        {
+            if (image.Source != null)
+            {
+                image.Source = new RGBToGrayscaleFilter((BitmapSource)image.Source).FilterImage();
+            }
         }
 
         //Open image as stream from file
