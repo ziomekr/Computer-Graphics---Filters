@@ -232,6 +232,18 @@ namespace Computer_Graphics___Filters
                 image.Source = new RGBToGrayscaleFilter((BitmapSource)image.Source).FilterImage();
             }
         }
+        //Octree color quantization filter click
+        private void OctreeClick(object sender, RoutedEventArgs e)
+        {
+            if (image.Source != null)
+            {
+                uint MaxColors;
+                if (uint.TryParse(OctreeMaxColors.Text, out MaxColors)) {
+                    OctreeColorQuantizationFilter OctFilter = new OctreeColorQuantizationFilter((BitmapSource)image.Source, MaxColors);
+                    image.Source = OctFilter.FilterImage();
+                }
+            }
+        }
 
         //Open image as stream from file
         private BitmapImage LoadImage(string FileName) {
@@ -329,7 +341,7 @@ namespace Computer_Graphics___Filters
                 }
             }
         }
-        //Update kernel grid to right size, checking for positive integer
+        //Update kernel grid to the right size, checking for positive integer
         private void KernelSizeTextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox t = (TextBox)sender;
@@ -440,6 +452,30 @@ namespace Computer_Graphics___Filters
                 t.Text = Regex.Replace(t.Text, "\\.", ",");
                 t.SelectionStart = t.Text.Length;
                 if (double.TryParse(t.Text, out num) && num>0)
+                {
+                    t.Text = t.Text.Trim();
+                    t.Tag = t.Text;
+                }
+                else
+                {
+                    t.Text = (string)t.Tag;
+                    t.SelectionStart = t.Text.Length;
+                }
+            }
+        }
+
+        //Check if max colors input for octree quantization is valid, positive integer values only
+        private void MaxColorsTextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox t = (TextBox)sender;
+            if (string.IsNullOrEmpty(t.Text))
+                t.Tag = "";
+            else
+            {
+                int num = 0;
+                t.Text = Regex.Replace(t.Text, "\\.", ",");
+                t.SelectionStart = t.Text.Length;
+                if (int.TryParse(t.Text, out num) && num > 0)
                 {
                     t.Text = t.Text.Trim();
                     t.Tag = t.Text;

@@ -13,7 +13,7 @@ namespace Computer_Graphics___Filters
         private Random RandomThreshold = new Random();
         private int BytePerPixel { get; set; }
         public RandomDitheringFilter(BitmapSource image, int k) : base(image, 0, k) {
-            this.BytePerPixel = base.ToProcess.Format.BitsPerPixel / sizeof(byte);
+            this.BytePerPixel = base.ToProcess.Format.BitsPerPixel / (sizeof(byte)*8);
         }
         
 

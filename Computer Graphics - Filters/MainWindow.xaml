@@ -28,7 +28,7 @@
             </Canvas>
             </ScrollViewer>
             <ScrollViewer Name="OriginalImageView" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" Visibility="Collapsed">
-                <Canvas Width="{Binding ActualWidth, ElementName=image}" Height="{Binding ActualHeight, ElementName=image}" >
+                <Canvas Width="{Binding ActualWidth, ElementName=originalImage}" Height="{Binding ActualHeight, ElementName=originalImage}" >
                     <Canvas.Background>
                         <VisualBrush  >
                             <VisualBrush.Visual>
@@ -163,6 +163,30 @@
                     </StackPanel>
                         <Button Margin="5" Width ="150" VerticalAlignment="Bottom" Content="Convert image to grayscale" Name="GrayscaleFilterButton" Click="GrayscaleClick"/>
                     </Grid>
+                </TabItem>
+                <TabItem Header="Color Quantization">
+                    <StackPanel>
+                        <Label FontSize="12" FontWeight="Bold">Octree Color Quantization</Label>
+                        <WrapPanel>
+                            <Label>Max number of colors:</Label>
+                            <TextBox Name="OctreeMaxColors" Margin="5" Text="256" TextChanged="MaxColorsTextChanged" TextAlignment="Center"  Width="40" />
+                        </WrapPanel>
+                        <Grid Height="240" Width="240" Visibility="Collapsed">
+                            <ScrollViewer Name="PalleteImageView" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                <Canvas Width="{Binding ActualWidth, ElementName=PaletteImage}" Height="{Binding ActualHeight, ElementName=PaletteImage}" >
+                                    <Canvas.Background>
+                                        <VisualBrush  >
+                                            <VisualBrush.Visual>
+                                                <Image x:Name="PaletteImage"/>
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Canvas.Background>
+                                </Canvas>
+                            </ScrollViewer>
+                        </Grid>
+                        
+                        <Button Margin="5" Width ="120" Content="Apply" Name="OctreeColorFilterButton" Click="OctreeClick"/>
+                    </StackPanel>
                 </TabItem>
             </TabControl>
         </Grid>
