@@ -241,6 +241,8 @@ namespace Computer_Graphics___Filters
                 if (uint.TryParse(OctreeMaxColors.Text, out MaxColors)) {
                     OctreeColorQuantizationFilter OctFilter = new OctreeColorQuantizationFilter((BitmapSource)image.Source, MaxColors);
                     image.Source = OctFilter.FilterImage();
+                    PaletteBMPCreator cr = new PaletteBMPCreator(OctFilter.ColorTree.ColorTable, OctFilter.ColorTree.CurrentColorTableIndex);
+                    PaletteImage.Source = cr.ColorPaletteBMP;
                 }
             }
         }

@@ -74,6 +74,7 @@
     <Compile Include="EmbossFilter.cs" />
     <Compile Include="Octree.cs" />
     <Compile Include="OctreeColorQuantizationFilter.cs" />
+    <Compile Include="PaletteBMPCreator.cs" />
     <Compile Include="RGB.cs" />
     <Compile Include="RGBToGrayscaleFilter.cs" />
     <Compile Include="MedianFilter.cs" />

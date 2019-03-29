@@ -165,28 +165,32 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="Color Quantization">
-                    <StackPanel>
-                        <Label FontSize="12" FontWeight="Bold">Octree Color Quantization</Label>
-                        <WrapPanel>
-                            <Label>Max number of colors:</Label>
-                            <TextBox Name="OctreeMaxColors" Margin="5" Text="256" TextChanged="MaxColorsTextChanged" TextAlignment="Center"  Width="40" />
-                        </WrapPanel>
-                        <Grid Height="240" Width="240" Visibility="Collapsed">
-                            <ScrollViewer Name="PalleteImageView" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                <Canvas Width="{Binding ActualWidth, ElementName=PaletteImage}" Height="{Binding ActualHeight, ElementName=PaletteImage}" >
-                                    <Canvas.Background>
-                                        <VisualBrush  >
-                                            <VisualBrush.Visual>
-                                                <Image x:Name="PaletteImage"/>
-                                            </VisualBrush.Visual>
-                                        </VisualBrush>
-                                    </Canvas.Background>
-                                </Canvas>
-                            </ScrollViewer>
-                        </Grid>
-                        
-                        <Button Margin="5" Width ="120" Content="Apply" Name="OctreeColorFilterButton" Click="OctreeClick"/>
-                    </StackPanel>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="105"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0">
+                            <Label FontSize="12" FontWeight="Bold">Octree Color Quantization</Label>
+                            <WrapPanel>
+                                <Label>Max number of colors:</Label>
+                                <TextBox Name="OctreeMaxColors" Margin="5" Text="256" TextChanged="MaxColorsTextChanged" TextAlignment="Center"  Width="40" />
+                            </WrapPanel>
+                            <Button Margin="5" Width ="120" Content="Apply" Name="OctreeColorFilterButton" Click="OctreeClick"/>
+                            <Label FontSize="10" FontWeight="Bold">Color Palette:</Label>
+                        </StackPanel>
+                        <ScrollViewer Grid.Row="1" Name="PalleteImageView" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top">
+                            <Canvas Width="{Binding ActualWidth, ElementName=PaletteImage}" Height="{Binding ActualHeight, ElementName=PaletteImage}" >
+                                <Canvas.Background>
+                                    <VisualBrush  >
+                                        <VisualBrush.Visual>
+                                            <Image x:Name="PaletteImage"/>
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Canvas.Background>
+                            </Canvas>
+                        </ScrollViewer>
+                    </Grid>
                 </TabItem>
             </TabControl>
         </Grid>

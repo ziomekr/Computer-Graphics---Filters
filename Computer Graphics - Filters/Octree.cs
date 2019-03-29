@@ -14,12 +14,12 @@ namespace Computer_Graphics___Filters
         const byte ColorBits = 8;
         const int BytePerPixel = 4;
         static byte TreeDepth = 8;
-        static byte LeafLevel = TreeDepth;
+        private byte LeafLevel = TreeDepth;
         private uint LeavesCount { get; set; }
         public uint MaxColors { get; set; }
-        OctreeNode Root = new OctreeNode(1);
+        OctreeNode Root = new OctreeNode(1, false);
         List<Stack<OctreeNode>> ReducibleNodes = new List<Stack<OctreeNode>>(Enumerable.Range(1, TreeDepth).Select(x => new Stack<OctreeNode>()));
-        RGB[] ColorTable;
+        public RGB[] ColorTable { get; set; }
         byte[] Pixels;
         public int CurrentColorTableIndex { get; set; }
         class OctreeNode
@@ -34,15 +34,12 @@ namespace Computer_Graphics___Filters
             public ulong BSum { get; set; }
             public RGB Color { get; set; }
             public List<OctreeNode> Children { get; set; }
-            public OctreeNode(int Level)
+            public OctreeNode(int Level, bool IsLeaf)
             {
                 this.Level = Level;
                 this.RSum = this.GSum = this.BSum = 0;
                 this.PixelsCount = 0;
-                if (this.Level == LeafLevel)
-                {
-                    this.IsLeaf = true;
-                }
+                this.IsLeaf = IsLeaf;
                 this.Children = new List<OctreeNode>(ColorBits);
                 for (int i = 0; i < ColorBits; i++)
                 {
@@ -86,7 +83,7 @@ namespace Computer_Graphics___Filters
             else {
                 int Branch = GetBranchLevel(Color, TreeDepth - Depth);
                 if (Node.Children[Branch] == null) {
-                    Node.Children[Branch] = new OctreeNode(Depth+1);
+                    Node.Children[Branch] = new OctreeNode(Depth+1, Depth+1 == LeafLevel);
                     if (Node.Children[Branch].IsLeaf)
                     {
                         this.LeavesCount += 1;
